@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	pluginv1 "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
-	"github.com/Silo-Server/silo-plugin-sdk/pkg/pluginsdk/manifest"
+	pluginv1 "github.com/prairie-server/prairie-plugin-sdk/pkg/pluginproto/prairie/plugin/v1"
+	"github.com/prairie-server/prairie-plugin-sdk/pkg/pluginsdk/manifest"
 )
 
 func loadManifest(t *testing.T) *pluginv1.PluginManifest {
@@ -17,12 +17,12 @@ func loadManifest(t *testing.T) *pluginv1.PluginManifest {
 	return parsed
 }
 
-// The host registers the plugin under the provider key Silo's built-in Trakt
+// The host registers the plugin under the provider key Prairie's built-in Trakt
 // provider used, so the identity must match it.
 func TestManifestIdentifiesTheTraktProvider(t *testing.T) {
 	t.Parallel()
 	parsed := loadManifest(t)
-	if parsed.GetPluginId() != "silo.watchprovider.trakt" || parsed.GetCategory() != "Watch Providers" {
+	if parsed.GetPluginId() != "prairie.watchprovider.trakt" || parsed.GetCategory() != "Watch Providers" {
 		t.Fatalf("plugin = %q in %q", parsed.GetPluginId(), parsed.GetCategory())
 	}
 	capabilities := parsed.GetCapabilities()

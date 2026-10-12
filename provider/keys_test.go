@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// The keys must match Silo's built-in Trakt provider byte for byte, because
+// The keys must match Prairie's built-in Trakt provider byte for byte, because
 // migrated connections keep the per-item rows stored under them.
 func TestProviderItemKeysMatchTheBuiltInProvider(t *testing.T) {
 	t.Parallel()

@@ -8,3 +8,6 @@
 # Local SDK development
 /go.work
 /go.work.sum
+
+# Test coverage output
+/coverage.out

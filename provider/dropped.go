@@ -3,7 +3,7 @@ package provider
 import (
 	"encoding/json"
 
-	pluginv1 "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	pluginv1 "github.com/prairie-server/prairie-plugin-sdk/pkg/pluginproto/prairie/plugin/v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -14,10 +14,10 @@ import (
 // are not read.
 //
 // The listing is read like every other one (see list_state.go), so a
-// successful read is a complete snapshot, as Silo's built-in provider
-// reported it. Trakt's listing leaves out drops that apps make, Silo's
+// successful read is a complete snapshot, as Prairie's built-in provider
+// reported it. Trakt's listing leaves out drops that apps make, Prairie's
 // included. The host keeps a drop it sent as agreed until a read confirms it,
-// so that omission neither undrops the show in Silo nor sends the drop again.
+// so that omission neither undrops the show in Prairie nor sends the drop again.
 // applyListEvents writes drops and undrops, one request per event group.
 
 // droppedShowStates converts one dropped row. Rows of another type are not

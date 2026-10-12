@@ -8,7 +8,7 @@ import (
 )
 
 // Provider item keys are stored by the host for every synced item. They must
-// stay byte-identical to the keys Silo's built-in Trakt provider produced, so
+// stay byte-identical to the keys Prairie's built-in Trakt provider produced, so
 // connections migrated from it keep their per-item rows.
 
 // ID schemes, as used in provider item keys ("tmdb:949") and traktIDRef.
@@ -20,7 +20,7 @@ const (
 	idSchemeTVDB  = "tvdb"
 )
 
-// Silo item kinds, used to namespace ids: TMDB and TVDB number movies, shows,
+// Prairie item kinds, used to namespace ids: TMDB and TVDB number movies, shows,
 // and episodes independently.
 const (
 	kindMovie   = "movie"
@@ -145,7 +145,7 @@ func sendableIDs(ids traktIDs) bool {
 // traktIDIndex matches items Trakt echoes back in a response, such as its
 // not_found lists, to the request items that produced them. An echo matches an
 // item when the two share ANY identifier (Trakt id, slug, IMDb, TMDB, or TVDB):
-// Trakt may echo a different id subset than Silo sent. Identifiers are
+// Trakt may echo a different id subset than Prairie sent. Identifiers are
 // namespaced by item kind, and zero ids never match.
 //
 // An echo that carries only identifiers the item lacks (for example a bare

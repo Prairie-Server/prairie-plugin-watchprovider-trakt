@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	pluginv1 "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	pluginv1 "github.com/prairie-server/prairie-plugin-sdk/pkg/pluginproto/prairie/plugin/v1"
 	"google.golang.org/protobuf/types/known/durationpb"
 )
 
@@ -214,7 +214,7 @@ func responseFault(method, path string, sentToken bool, result httpResult) *plug
 		return newFault(pluginv1.WatchSyncFaultCode_WATCH_SYNC_FAULT_CODE_INVALID_REQUEST,
 			failed+": Trakt could not find the item")
 	default:
-		// Other refusals stay retryable: Silo's built-in provider recorded a
+		// Other refusals stay retryable: Prairie's built-in provider recorded a
 		// failed batch, which the host retries a few times, rather than items
 		// Trakt does not know.
 		return temporaryFault(failed)
