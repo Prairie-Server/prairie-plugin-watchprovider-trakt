@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"net/http"
 
-	pluginv1 "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	pluginv1 "github.com/prairie-server/prairie-plugin-sdk/pkg/pluginproto/prairie/plugin/v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // Trakt rates on the integer 1 to 10 scale the plugin contract uses, so
 // ratings pass through unchanged. Only movie and show ratings are read and
-// written: Silo rates movies and series, not seasons or episodes. Both rating
+// written: Prairie rates movies and series, not seasons or episodes. Both rating
 // listings are complete, so a title absent from them is unrated on Trakt.
 
 func ratedMovieStates(raw json.RawMessage) ([]*pluginv1.WatchSyncRemoteState, error) {

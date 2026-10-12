@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	pluginv1 "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	pluginv1 "github.com/prairie-server/prairie-plugin-sdk/pkg/pluginproto/prairie/plugin/v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -90,7 +90,7 @@ func TestListNotFoundMatchesAShowByAnySharedID(t *testing.T) {
 	for _, op := range listOperations {
 		t.Run(op.name, func(t *testing.T) {
 			t.Parallel()
-			// Silo keys the show by IMDb; Trakt echoes it back by TVDB alone.
+			// Prairie keys the show by IMDb; Trakt echoes it back by TVDB alone.
 			show := seriesEvent("show-1", op.operation, map[string]string{"imdb": "tt0903747", "tvdb": "81189"})
 			show.ProviderItemKey = "imdb:tt0903747"
 			_, got := runList(t, op.path, `{"movies":[],"shows":[{"ids":{"trakt":0,"slug":"","imdb":"","tmdb":0,"tvdb":81189}}]}`, show)
@@ -345,9 +345,9 @@ func TestScrobblePayloadNamesTheItemLikeTheBuiltInProvider(t *testing.T) {
 		event *pluginv1.WatchSyncEvent
 		want  string
 	}{
-		"movie":             {movie, `{"app_date":"2026-05-05","app_version":"Silo","movie":{"ids":{"trakt":0,"slug":"","imdb":"tt1","tmdb":2,"tvdb":0}},"progress":0}`},
-		"episode by ids":    {episodeWith(map[string]string{"tvdb": "349232"}), `{"app_date":"2026-05-05","app_version":"Silo","episode":{"ids":{"trakt":0,"slug":"","imdb":"","tmdb":0,"tvdb":349232}},"progress":25}`},
-		"episode by number": {episodeWith(nil), `{"app_date":"2026-05-05","app_version":"Silo","episode":{"number":2,"season":1},"progress":25,"show":{"ids":{"trakt":0,"slug":"","imdb":"","tmdb":0,"tvdb":79126}}}`},
+		"movie":             {movie, `{"app_date":"2026-05-05","app_version":"Prairie","movie":{"ids":{"trakt":0,"slug":"","imdb":"tt1","tmdb":2,"tvdb":0}},"progress":0}`},
+		"episode by ids":    {episodeWith(map[string]string{"tvdb": "349232"}), `{"app_date":"2026-05-05","app_version":"Prairie","episode":{"ids":{"trakt":0,"slug":"","imdb":"","tmdb":0,"tvdb":349232}},"progress":25}`},
+		"episode by number": {episodeWith(nil), `{"app_date":"2026-05-05","app_version":"Prairie","episode":{"number":2,"season":1},"progress":25,"show":{"ids":{"trakt":0,"slug":"","imdb":"","tmdb":0,"tvdb":79126}}}`},
 	} {
 		encoded, _ := json.Marshal(scrobblePayload(tc.event, now))
 		if string(encoded) != tc.want {

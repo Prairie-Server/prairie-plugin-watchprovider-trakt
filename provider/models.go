@@ -3,7 +3,7 @@ package provider
 import "time"
 
 // traktIDs is Trakt's ids object. Its fields are not omitempty: Trakt accepts
-// zero values, and the payloads match what Silo's built-in provider sent.
+// zero values, and the payloads match what Prairie's built-in provider sent.
 type traktIDs struct {
 	Trakt int    `json:"trakt"`
 	Slug  string `json:"slug"`

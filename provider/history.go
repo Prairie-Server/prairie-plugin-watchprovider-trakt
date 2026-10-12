@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"time"
 
-	pluginv1 "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	pluginv1 "github.com/prairie-server/prairie-plugin-sdk/pkg/pluginproto/prairie/plugin/v1"
 )
 
 const (
@@ -24,7 +24,7 @@ const (
 	traktTimeFormat = "2006-01-02T15:04:05.000Z"
 )
 
-// localPlay is a Silo play a MARK_WATCHED or MARK_UNWATCHED event carries.
+// localPlay is a Prairie play a MARK_WATCHED or MARK_UNWATCHED event carries.
 type localPlay struct {
 	index     int
 	kind      string
@@ -68,9 +68,9 @@ func localPlayFrom(event *pluginv1.WatchSyncEvent, needTime bool) (localPlay, st
 // applyWatched adds plays to the Trakt history. Trakt stores every play it is
 // sent, including a repeat, so a play Trakt already has must not be sent
 // again: neither a local play already on Trakt nor a retried event. Plays are
-// matched as Silo's built-in provider matched them before export, by item key
+// matched as Prairie's built-in provider matched them before export, by item key
 // and watch minute, each remote play standing for at most one local play; a
-// remote play is found under any key Silo could give its item.
+// remote play is found under any key Prairie could give its item.
 func (s *Server) applyWatched(ctx context.Context, client *apiClient, stopAt time.Time, group eventGroup) *pluginv1.WatchSyncFault {
 	var plays []localPlay
 	// A repeated event ID is the same event; it shares the first one's result.
@@ -133,7 +133,7 @@ func (s *Server) addNewPlays(ctx context.Context, client *apiClient, stopAt time
 	if len(send) == 0 {
 		return nil
 	}
-	// Trakt reports titles it does not know in not_found; Silo's built-in
+	// Trakt reports titles it does not know in not_found; Prairie's built-in
 	// provider counted those plays as sent, and so does the plugin.
 	if _, _, fault := client.do(ctx, http.MethodPost, historyPath, nil, historyPayload(send), nil); fault != nil {
 		indexes := make([]int, 0, len(send))
@@ -217,10 +217,10 @@ func (s *Server) remotePlays(ctx context.Context, client *apiClient, stopAt time
 }
 
 // remoteItemKeys returns every key the host could give a played item. The
-// host keys a local play by the ids Silo knows (providerItemKeyForLocalPlay),
-// which may differ from the ids Trakt returns: a movie Silo knows only by TMDB
+// host keys a local play by the ids Prairie knows (providerItemKeyForLocalPlay),
+// which may differ from the ids Trakt returns: a movie Prairie knows only by TMDB
 // is "tmdb:603" while Trakt's row also carries its IMDb id, and an episode
-// Silo knows only by show and number is "show:tvdb:79126:s1:e2" while Trakt's
+// Prairie knows only by show and number is "show:tvdb:79126:s1:e2" while Trakt's
 // row carries the episode's own ids. Only a play of the same item in the same
 // minute can match, so each extra key is safe.
 func remoteItemKeys(item traktHistoryItem) []string {
@@ -267,7 +267,7 @@ func remoteItemKeys(item traktHistoryItem) []string {
 	return keys
 }
 
-// fetchAll reads every page of a listing inside this call, as Silo's built-in
+// fetchAll reads every page of a listing inside this call, as Prairie's built-in
 // provider read paginated listings: a listing of several pages is read twice
 // and must match, and an inconsistent read restarts a bounded number of
 // times. tooLarge reports a listing of more than maxPages pages, which is not
@@ -337,7 +337,7 @@ func (c *apiClient) fetchPass(ctx context.Context, stopAt time.Time, l listing, 
 	}
 }
 
-// applyUnwatched removes plays from the Trakt history. Like Silo's built-in
+// applyUnwatched removes plays from the Trakt history. Like Prairie's built-in
 // provider, a removal names the item without a watch time, so it clears every
 // play of the item, and repeating it changes nothing.
 func applyUnwatched(ctx context.Context, client *apiClient, group eventGroup) *pluginv1.WatchSyncFault {

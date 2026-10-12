@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	pluginv1 "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	pluginv1 "github.com/prairie-server/prairie-plugin-sdk/pkg/pluginproto/prairie/plugin/v1"
 )
 
 func startRequest() *pluginv1.WatchSyncDeviceAuthorizationServiceStartRequest {
@@ -44,7 +44,7 @@ func TestStartSendsTraktHeadersAndReturnsTheUserChallenge(t *testing.T) {
 		t.Fatalf("request = %s %v", gotPath, gotBody)
 	}
 	if gotHeader.Get("trakt-api-key") != testClientID || gotHeader.Get("trakt-api-version") != "2" ||
-		!strings.HasPrefix(gotHeader.Get("User-Agent"), "silo-plugin-watchprovider-trakt/") || gotHeader.Get("Authorization") != "" {
+		!strings.HasPrefix(gotHeader.Get("User-Agent"), "prairie-plugin-watchprovider-trakt/") || gotHeader.Get("Authorization") != "" {
 		t.Fatalf("headers = %v", gotHeader)
 	}
 	if response.GetUserCode() != "USER1234" || response.GetVerificationUrl() != "https://trakt.tv/activate" {

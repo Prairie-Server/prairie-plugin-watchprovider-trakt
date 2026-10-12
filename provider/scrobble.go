@@ -5,12 +5,12 @@ import (
 	"net/http"
 	"time"
 
-	pluginv1 "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	pluginv1 "github.com/prairie-server/prairie-plugin-sdk/pkg/pluginproto/prairie/plugin/v1"
 )
 
 // applyScrobble forwards one playback event. Trakt itself decides from the
 // progress whether a stop records a play (at 80% or more), as it did for
-// Silo's built-in provider.
+// Prairie's built-in provider.
 func (s *Server) applyScrobble(ctx context.Context, client *apiClient, operation pluginv1.WatchSyncOperation, group eventGroup) *pluginv1.WatchSyncFault {
 	index := group.pending[0]
 	event := group.events[index]
@@ -48,7 +48,7 @@ func scrobblePayload(event *pluginv1.WatchSyncEvent, now time.Time) map[string]a
 	}
 	payload := map[string]any{
 		"progress":    progress,
-		"app_version": "Silo",
+		"app_version": "Prairie",
 		"app_date":    now.UTC().Format("2006-01-02"),
 	}
 	media := event.GetMedia()

@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	pluginv1 "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	pluginv1 "github.com/prairie-server/prairie-plugin-sdk/pkg/pluginproto/prairie/plugin/v1"
 )
 
 func rateLimitedUpstream(t *testing.T, retryAfter string, attempts *atomic.Int32) *httptest.Server {
@@ -211,7 +211,7 @@ func TestTraktRequestsCarryTraktHeaders(t *testing.T) {
 		"trakt-api-key":     testClientID,
 		"Authorization":     "Bearer " + testAccessToken,
 		// Trakt may block requests without an identifying User-Agent.
-		"User-Agent": "silo-plugin-watchprovider-trakt/1.2.3",
+		"User-Agent": "prairie-plugin-watchprovider-trakt/1.2.3",
 	} {
 		if got := header.Get(key); got != want {
 			t.Errorf("%s = %q, want %q", key, got, want)
@@ -222,11 +222,11 @@ func TestTraktRequestsCarryTraktHeaders(t *testing.T) {
 func TestUserAgentKeepsOnlyTokenCharacters(t *testing.T) {
 	t.Parallel()
 	for version, want := range map[string]string{
-		"":                 "silo-plugin-watchprovider-trakt/dev",
-		"v0.1.0":           "silo-plugin-watchprovider-trakt/0.1.0",
-		"0.1.0-3-gabc1234": "silo-plugin-watchprovider-trakt/0.1.0-3-gabc1234",
-		"0.1 (évil)\r\nX":  "silo-plugin-watchprovider-trakt/0.1vilX",
-		" \t":              "silo-plugin-watchprovider-trakt/dev",
+		"":                 "prairie-plugin-watchprovider-trakt/dev",
+		"v0.1.0":           "prairie-plugin-watchprovider-trakt/0.1.0",
+		"0.1.0-3-gabc1234": "prairie-plugin-watchprovider-trakt/0.1.0-3-gabc1234",
+		"0.1 (évil)\r\nX":  "prairie-plugin-watchprovider-trakt/0.1vilX",
+		" \t":              "prairie-plugin-watchprovider-trakt/dev",
 	} {
 		if got := userAgent(version); got != want {
 			t.Errorf("userAgent(%q) = %q, want %q", version, got, want)

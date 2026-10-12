@@ -15,7 +15,7 @@ import (
 	"strings"
 	"time"
 
-	pluginv1 "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	pluginv1 "github.com/prairie-server/prairie-plugin-sdk/pkg/pluginproto/prairie/plugin/v1"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -24,7 +24,7 @@ import (
 //
 // Trakt pages listings by offset, so a page shifts when the list changes
 // mid-read, which can skip or repeat a row; the host reads a skipped favorite,
-// watchlist entry, or rating as removed. Like Silo's built-in provider, a
+// watchlist entry, or rating as removed. Like Prairie's built-in provider, a
 // listing that spans several pages is therefore read twice, and the read fails
 // unless both passes return the same rows; a changed X-Pagination-Item-Count
 // within a pass fails it too.
@@ -65,7 +65,7 @@ type listing struct {
 }
 
 // listingsFor returns the listings that hold one state family, in the order
-// Silo's built-in provider read them.
+// Prairie's built-in provider read them.
 func listingsFor(kind pluginv1.WatchSyncRemoteStateKind) []listing {
 	switch kind {
 	case pluginv1.WatchSyncRemoteStateKind_WATCH_SYNC_REMOTE_STATE_KIND_WATCHED:

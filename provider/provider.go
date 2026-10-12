@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	pluginv1 "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	pluginv1 "github.com/prairie-server/prairie-plugin-sdk/pkg/pluginproto/prairie/plugin/v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -84,7 +84,7 @@ func userAgent(version string) string {
 	if kept == "" {
 		kept = "dev"
 	}
-	return "silo-plugin-watchprovider-trakt/" + kept
+	return "prairie-plugin-watchprovider-trakt/" + kept
 }
 
 func (s *Server) clock() time.Time {
@@ -128,7 +128,7 @@ func (s *Server) appClient(capability string, config *pluginv1.WatchSyncProvider
 }
 
 // authenticatedClient returns a client that signs requests with the
-// connection's access token. Credentials of connections migrated from Silo's
+// connection's access token. Credentials of connections migrated from Prairie's
 // built-in provider carry only the tokens and their expiry.
 func (s *Server) authenticatedClient(auth *pluginv1.WatchSyncAuthenticatedContext) (*apiClient, *pluginv1.WatchSyncFault) {
 	client, fault := s.appClient(auth.GetCapabilityId(), auth.GetProviderConfig())
@@ -171,7 +171,7 @@ func (s *Server) GetAccount(ctx context.Context, req *pluginv1.WatchSyncGetAccou
 	if _, _, fault := client.do(ctx, http.MethodGet, "/users/settings", nil, nil, &settings); fault != nil {
 		return &pluginv1.WatchSyncGetAccountResponse{Fault: fault}, nil
 	}
-	// The slug is the account id Silo's built-in provider stored, so existing
+	// The slug is the account id Prairie's built-in provider stored, so existing
 	// connections keep their account binding.
 	id := settings.User.IDs.Slug
 	if id == "" {
@@ -224,7 +224,7 @@ func (s *Server) RefreshCredentials(ctx context.Context, req *pluginv1.WatchSync
 
 // credentials converts a token response into complete credentials, or nil
 // when it holds no access token. A response without a refresh token keeps the
-// previous one, as Silo's built-in provider did.
+// previous one, as Prairie's built-in provider did.
 func (s *Server) credentials(token traktToken, previousRefresh string) *pluginv1.WatchSyncCredentials {
 	if strings.TrimSpace(token.AccessToken) == "" {
 		return nil
@@ -397,7 +397,7 @@ func rejectedResult(eventID, message string) *pluginv1.WatchSyncApplyResult {
 	return resultFromFault(eventID, invalidRequestFault(message))
 }
 
-// mediaKind maps a media type to the item kind Silo's built-in provider used.
+// mediaKind maps a media type to the item kind Prairie's built-in provider used.
 func mediaKind(media *pluginv1.WatchSyncMedia) string {
 	switch media.GetMediaType() {
 	case pluginv1.WatchSyncMediaType_WATCH_SYNC_MEDIA_TYPE_MOVIE:

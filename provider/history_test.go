@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	pluginv1 "github.com/Silo-Server/silo-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	pluginv1 "github.com/prairie-server/prairie-plugin-sdk/pkg/pluginproto/prairie/plugin/v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -169,7 +169,7 @@ func TestApplyWatchedIsIdempotentAcrossAtLeastOnceDelivery(t *testing.T) {
 	}
 }
 
-// Silo keys an episode it knows only by show and number differently from the
+// Prairie keys an episode it knows only by show and number differently from the
 // episode ids Trakt's history returns; the play must still be found.
 func TestApplyWatchedFindsAnEpisodeKnownOnlyByShowAndNumber(t *testing.T) {
 	t.Parallel()
